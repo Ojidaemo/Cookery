@@ -11,7 +11,7 @@ class MainViewController: UIViewController {
     
     // создаем обычную коллекцию
     private let collectionView: UICollectionView = {
-       let collectionViewLayout = UICollectionViewLayout()
+       let collectionViewLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = .none
         collectionView.bounces = false
@@ -29,11 +29,12 @@ class MainViewController: UIViewController {
     }
     
     private func setupViews() {
+        
         view.backgroundColor = .white
         title = "Popular recipes"
         
         view.addSubview(collectionView)
-        collectionView.register(SaleCollectionViewCell.self, forCellWithReuseIdentifier: "StoriesCollectionViewCell")
+        
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "PopularCollectionViewCell")
         collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
         collectionView.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderSupplementaryView")
@@ -52,7 +53,7 @@ class MainViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: 0)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -0)
             
         ])
     }
@@ -65,11 +66,9 @@ extension MainViewController {
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
-            guard let self = self else {return nil}
+            guard let self = self else { return nil }
             let section = self.sections[sectionIndex]
             switch section {
-            case .sales(_):
-                return self.createSaleSection()
             case .category(_):
                 return self.createCategorySection()
             case .example(_):
@@ -78,6 +77,7 @@ extension MainViewController {
         }
     }
     
+    // функция для настройки секций
     private func createLayoutSection(group: NSCollectionLayoutGroup,
                                      behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
                                      interGroupSpacing: CGFloat,
@@ -91,28 +91,18 @@ extension MainViewController {
 //        section.supplementaryContentInsetsReference  = true
         return section
     }
-//    секция верхняя
-    private func createSaleSection() -> NSCollectionLayoutSection {
-        
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9), heightDimension: .fractionalHeight(0.2)), subitems: [item])
-        let section = createLayoutSection(group: group,
-                                          behavior: .groupPaging,
-                                          interGroupSpacing: 5,
-                                          supplementaryItems: [])
-        section.contentInsets = .init(top: 0, leading: -10, bottom: 0, trailing: 0)
-        return section
-    }
+
     //секци с категориями в середине
     private func createCategorySection() -> NSCollectionLayoutSection {
-        
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.1)), subitems: [item])
+                
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.30), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2)), subitems: [item])
+        group.interItemSpacing = .fixed(5)
         let section = createLayoutSection(group: group,
-                                          behavior: .groupPaging,
-                                          interGroupSpacing: 10,
+                                          behavior: .paging,
+                                          interGroupSpacing: 0,
                                           supplementaryItems: [supplementaryHeaderItem()])
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: -10)
         return section
     }
     
@@ -121,14 +111,15 @@ extension MainViewController {
         
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                             heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9),
-                                                                         heightDimension: .fractionalHeight(0.45)),
-                                                       subitems: [item])
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                                       heightDimension: .fractionalHeight(0.33)),
+                                                                subitems: [item])
         let section = createLayoutSection(group: group,
-                                          behavior: .continuous,
+                                          behavior: .none,
                                           interGroupSpacing: 10,
                                           supplementaryItems: [supplementaryHeaderItem()])
-        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 0)
+        section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
+        
         return section
     }
     
@@ -138,6 +129,7 @@ extension MainViewController {
                                 heightDimension: .estimated(30)),
               elementKind: UICollectionView.elementKindSectionHeader,
               alignment: .top)
+        
     }
     
 }
@@ -153,25 +145,17 @@ extension MainViewController: UICollectionViewDelegate {
 extension MainViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        sections.count
+        return sections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //определяем сколько в каждой секции айтемов
-        sections[section].count
+        return sections[section].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // при помощи свича перебираем все категории и настраиваем ячейку
         switch sections[indexPath.section] {
-            
-        case .sales(let sale):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StoriesCollectionViewCell", for: indexPath) as? SaleCollectionViewCell
-            else {
-                return UICollectionViewCell()
-            }
-            cell.configureCell(imageName: sale[indexPath.row].image)
-            return cell
             
         case .category(let category):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PopularCollectionViewCell", for: indexPath) as? CategoryCell
@@ -180,12 +164,14 @@ extension MainViewController: UICollectionViewDataSource {
             }
             cell.configureCell(categoryName: category[indexPath.row].title, imageName: category[indexPath.row].image)
             return cell
+            
         case .example(let example):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExampleCollectionViewCell", for: indexPath) as? MainCell
             else {
                 return UICollectionViewCell()
             }
             cell.configureCell(imageName: example[indexPath.row].image)
+            cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             return cell
         }
     }

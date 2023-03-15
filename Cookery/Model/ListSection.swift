@@ -9,7 +9,6 @@ import Foundation
 
 // перечисляем секции
 enum ListSection {
-    case sales([ListItem])
     case category([ListItem])
     case example([ListItem])
     
@@ -17,8 +16,7 @@ enum ListSection {
     var items: [ListItem] {
         //перебираем возможные секции
         switch self {
-        case .sales(let items),
-                .category(let items),
+        case .category(let items),
                 .example(let items):
             return items
         }
@@ -32,8 +30,6 @@ enum ListSection {
     //определяем название секций
     var title: String {
         switch self {
-        case .sales(_):
-            return ""
         case .category(_):
             return "Category"
         case .example(_):
