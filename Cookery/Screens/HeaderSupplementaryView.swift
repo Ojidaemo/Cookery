@@ -13,8 +13,8 @@ class HeaderSupplementaryView: UICollectionReusableView {
        let label = UILabel()
         label.text = "header"
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .gray
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,7 +39,6 @@ class HeaderSupplementaryView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             headerLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10)
-    
         ])
     }
     

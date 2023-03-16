@@ -1,47 +1,39 @@
 //
-//  SearchViewController.swift
+//  FavouriteViewController.swift
 //  Cookery
 //
-//  Created by Vitali Martsinovich on 2023-03-13.
+//  Created by Vitali Martsinovich on 2023-03-16.
 //
 
 import UIKit
 
-final class SearchViewController: UIViewController {
+class FavouriteViewController: UIViewController {
     
-    private let searchView = SearchView()
+    private let favouriteView = FavouriteView()
     private let sections = MockData.shared.pageData
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        searchView.collectionView.delegate = self
-        searchView.collectionView.dataSource = self
-        searchView.searchBar.delegate = self
+        favouriteView.collectionView.delegate = self
+        favouriteView.collectionView.dataSource = self
         setUpView()
-        searchView.collectionView.isHidden = true
     }
     
     private func setUpView() {
-        view.addSubview(searchView)
-        searchView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
+        view.addSubview(favouriteView)
+        favouriteView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
         NSLayoutConstraint.activate([
-            searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            searchView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            favouriteView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            favouriteView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            favouriteView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            favouriteView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
-    }
-    
-    func search(for searchText: String) {
-        print("Searching for '\(searchText)'...")
-        searchView.searchBar.text = ""
-        searchView.searchLabel.isHidden = true
-        searchView.collectionView.isHidden = false
     }
 }
 
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
@@ -72,11 +64,3 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-extension SearchViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchText = searchBar.text {
-            search(for: searchText)
-        }
-        searchBar.resignFirstResponder()
-    }
-}

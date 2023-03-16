@@ -10,14 +10,14 @@ import Foundation
 // перечисляем секции
 enum ListSection {
     case category([ListItem])
-    case example([ListItem])
+    case recipe([ListItem])
     
     // чтобы понять сколько айтемов в каждой секции
     var items: [ListItem] {
         //перебираем возможные секции
         switch self {
         case .category(let items),
-                .example(let items):
+                .recipe(let items):
             return items
         }
     }
@@ -31,9 +31,9 @@ enum ListSection {
     var title: String {
         switch self {
         case .category(_):
-            return "Category"
-        case .example(_):
-            return "Example"
+            return "Food categories"
+        case .recipe(_):
+            return "The most popular recipes"
         }
     }
 }

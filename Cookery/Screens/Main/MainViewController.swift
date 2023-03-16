@@ -31,7 +31,6 @@ class MainViewController: UIViewController {
     private func setupViews() {
         
         view.backgroundColor = .white
-        title = "Popular recipes"
         
         view.addSubview(collectionView)
         
@@ -53,7 +52,7 @@ class MainViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: -0)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: 0)
             
         ])
     }
@@ -71,7 +70,7 @@ extension MainViewController {
             switch section {
             case .category(_):
                 return self.createCategorySection()
-            case .example(_):
+            case .recipe(_):
                 return self.createExampleSection()
             }
         }
@@ -108,7 +107,6 @@ extension MainViewController {
     
     // нижняя секция экзампл
     private func createExampleSection() -> NSCollectionLayoutSection {
-        
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
                                                             heightDimension: .fractionalHeight(1)))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1),
@@ -119,7 +117,7 @@ extension MainViewController {
                                           interGroupSpacing: 10,
                                           supplementaryItems: [supplementaryHeaderItem()])
         section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-        
+
         return section
     }
     
@@ -165,7 +163,7 @@ extension MainViewController: UICollectionViewDataSource {
             cell.configureCell(categoryName: category[indexPath.row].title, imageName: category[indexPath.row].image)
             return cell
             
-        case .example(let example):
+        case .recipe(let example):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExampleCollectionViewCell", for: indexPath) as? MainCell
             else {
                 return UICollectionViewCell()
@@ -175,6 +173,7 @@ extension MainViewController: UICollectionViewDataSource {
             return cell
         }
     }
+    
     // запрашиввает отображение доп обьекта
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
@@ -187,6 +186,16 @@ extension MainViewController: UICollectionViewDataSource {
             return header
         default:
             return UICollectionReusableView()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+        if indexPath.section == 1 {
+            let vc = DetailedViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            return
         }
     }
 }

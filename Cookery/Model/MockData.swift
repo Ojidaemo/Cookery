@@ -17,24 +17,24 @@ struct MockData {
     
     private let category: ListSection = {
         .category([
-            .init(title: "All", image: "categoryImage"),
+            .init(title: "All", image: "all"),
             .init(title: "Side dish", image: "categoryImage"),
             .init(title: "Dessert", image: "categoryImage"),
             .init(title: "Appetizer", image: "categoryImage"),
-            .init(title: "Salad", image: "categoryImage"),
+            .init(title: "Salad", image: "salad"),
             .init(title: "Bread", image: "categoryImage"),
             .init(title: "Breakfast", image: "categoryImage"),
-            .init(title: "Soup", image: "categoryImage"),
+            .init(title: "Soup", image: "soup"),
             .init(title: "Sauce", image: "categoryImage"),
             .init(title: "Marinade", image: "categoryImage"),
             .init(title: "Snack", image: "categoryImage"),
-            .init(title: "Drink", image: "categoryImage"),
-            .init(title: "Fingerfood", image: "categoryImage")
+            .init(title: "Drink", image: "drinks"),
+            .init(title: "Fingerfood", image: "fingerfood")
         ])
     }()
     
     private let example: ListSection = {
-        .example([
+        .recipe([
             .init(title: "", image: "foodImage"),
             .init(title: "", image: "foodImage"),
             .init(title: "", image: "foodImage"),

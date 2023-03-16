@@ -1,16 +1,17 @@
 //
-//  FavouriteViewController.swift
+//  DetailedViewController.swift
 //  Cookery
 //
-//  Created by Vitali Martsinovich on 2023-03-13.
+//  Created by Vitali Martsinovich on 2023-03-15.
 //
 
 import UIKit
 
-class FavouriteViewController: UIViewController {
+class DetailedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .red
 
     }

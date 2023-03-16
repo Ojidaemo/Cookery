@@ -13,7 +13,6 @@
 		87F5E35729BF51F900F80CF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 87F5E35629BF51F900F80CF6 /* Assets.xcassets */; };
 		87F5E35A29BF51F900F80CF6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 87F5E35829BF51F900F80CF6 /* LaunchScreen.storyboard */; };
 		87F5E36229BF53CB00F80CF6 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E36129BF53CB00F80CF6 /* TabBarViewController.swift */; };
-		87F5E36429BF557500F80CF6 /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E36329BF557500F80CF6 /* FavouriteViewController.swift */; };
 		87F5E36629BF588300F80CF6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E36529BF588300F80CF6 /* SearchViewController.swift */; };
 		87F5E36829BF601F00F80CF6 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E36729BF601F00F80CF6 /* UIColor.swift */; };
 		87F5E36F29BF68DD00F80CF6 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E36E29BF68DD00F80CF6 /* ListItem.swift */; };
@@ -24,7 +23,10 @@
 		87F5E37D29BF91FC00F80CF6 /* MainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E37C29BF91FC00F80CF6 /* MainCell.swift */; };
 		87F5E38129C0AFA000F80CF6 /* HeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E38029C0AFA000F80CF6 /* HeaderSupplementaryView.swift */; };
 		87F5E3A429C1F6F600F80CF6 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E3A329C1F6F600F80CF6 /* SearchView.swift */; };
-		87F5E3A629C1FFF100F80CF6 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E3A529C1FFF100F80CF6 /* RecipeCell.swift */; };
+		87F5E3AA29C23BB400F80CF6 /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E3A929C23BB400F80CF6 /* DetailedViewController.swift */; };
+		87F5E3AC29C33E8B00F80CF6 /* FavouriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E3AB29C33E8B00F80CF6 /* FavouriteView.swift */; };
+		87F5E3AE29C3444E00F80CF6 /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E3AD29C3444E00F80CF6 /* FavouriteViewController.swift */; };
+		87F5E3B029C3554B00F80CF6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E3AF29C3554B00F80CF6 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +38,6 @@
 		87F5E35929BF51F900F80CF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		87F5E35B29BF51F900F80CF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87F5E36129BF53CB00F80CF6 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		87F5E36329BF557500F80CF6 /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
 		87F5E36529BF588300F80CF6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		87F5E36729BF601F00F80CF6 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		87F5E36E29BF68DD00F80CF6 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
@@ -47,7 +48,10 @@
 		87F5E37C29BF91FC00F80CF6 /* MainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCell.swift; sourceTree = "<group>"; };
 		87F5E38029C0AFA000F80CF6 /* HeaderSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSupplementaryView.swift; sourceTree = "<group>"; };
 		87F5E3A329C1F6F600F80CF6 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		87F5E3A529C1FFF100F80CF6 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		87F5E3A929C23BB400F80CF6 /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
+		87F5E3AB29C33E8B00F80CF6 /* FavouriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteView.swift; sourceTree = "<group>"; };
+		87F5E3AD29C3444E00F80CF6 /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
+		87F5E3AF29C3554B00F80CF6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +87,6 @@
 				87F5E37229BF6AB600F80CF6 /* Application */,
 				87F5E36D29BF689C00F80CF6 /* Model */,
 				87F5E36C29BF689400F80CF6 /* Screens */,
-				87F5E36129BF53CB00F80CF6 /* TabBarViewController.swift */,
 				87F5E36B29BF681700F80CF6 /* Supporting Files */,
 				87F5E36929BF602B00F80CF6 /* Extensions */,
 				87F5E35B29BF51F900F80CF6 /* Info.plist */,
@@ -99,14 +102,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		87F5E36A29BF67FF00F80CF6 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				87F5E36329BF557500F80CF6 /* FavouriteViewController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		87F5E36B29BF681700F80CF6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,10 +115,13 @@
 		87F5E36C29BF689400F80CF6 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				87F5E3A229C1F69F00F80CF6 /* Search */,
-				87F5E37929BF7C8D00F80CF6 /* Cells */,
+				87F5E36129BF53CB00F80CF6 /* TabBarViewController.swift */,
+				87F5E38029C0AFA000F80CF6 /* HeaderSupplementaryView.swift */,
 				87F5E37829BF788200F80CF6 /* Main */,
-				87F5E36A29BF67FF00F80CF6 /* Controllers */,
+				87F5E3A729C23B5000F80CF6 /* Favourite */,
+				87F5E3A229C1F69F00F80CF6 /* Search */,
+				87F5E3A829C23B5A00F80CF6 /* Detailed */,
+				87F5E37929BF7C8D00F80CF6 /* Cells */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -131,9 +129,9 @@
 		87F5E36D29BF689C00F80CF6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				87F5E37329BF6AE900F80CF6 /* MockData.swift */,
 				87F5E36E29BF68DD00F80CF6 /* ListItem.swift */,
 				87F5E37029BF691700F80CF6 /* ListSection.swift */,
+				87F5E37329BF6AE900F80CF6 /* MockData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -150,7 +148,7 @@
 		87F5E37829BF788200F80CF6 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				87F5E38029C0AFA000F80CF6 /* HeaderSupplementaryView.swift */,
+				87F5E3AF29C3554B00F80CF6 /* MainView.swift */,
 				87F5E35129BF51F800F80CF6 /* MainViewController.swift */,
 			);
 			path = Main;
@@ -161,7 +159,6 @@
 			children = (
 				87F5E37A29BF8FC800F80CF6 /* CategoryCell.swift */,
 				87F5E37C29BF91FC00F80CF6 /* MainCell.swift */,
-				87F5E3A529C1FFF100F80CF6 /* RecipeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -173,6 +170,23 @@
 				87F5E3A329C1F6F600F80CF6 /* SearchView.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		87F5E3A729C23B5000F80CF6 /* Favourite */ = {
+			isa = PBXGroup;
+			children = (
+				87F5E3AB29C33E8B00F80CF6 /* FavouriteView.swift */,
+				87F5E3AD29C3444E00F80CF6 /* FavouriteViewController.swift */,
+			);
+			path = Favourite;
+			sourceTree = "<group>";
+		};
+		87F5E3A829C23B5A00F80CF6 /* Detailed */ = {
+			isa = PBXGroup;
+			children = (
+				87F5E3A929C23BB400F80CF6 /* DetailedViewController.swift */,
+			);
+			path = Detailed;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,15 +260,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				87F5E36629BF588300F80CF6 /* SearchViewController.swift in Sources */,
+				87F5E3B029C3554B00F80CF6 /* MainView.swift in Sources */,
 				87F5E37629BF760300F80CF6 /* ApiKeys.swift in Sources */,
+				87F5E3AC29C33E8B00F80CF6 /* FavouriteView.swift in Sources */,
+				87F5E3AA29C23BB400F80CF6 /* DetailedViewController.swift in Sources */,
+				87F5E3AE29C3444E00F80CF6 /* FavouriteViewController.swift in Sources */,
 				87F5E36829BF601F00F80CF6 /* UIColor.swift in Sources */,
-				87F5E3A629C1FFF100F80CF6 /* RecipeCell.swift in Sources */,
 				87F5E35229BF51F800F80CF6 /* MainViewController.swift in Sources */,
 				87F5E34E29BF51F800F80CF6 /* AppDelegate.swift in Sources */,
 				87F5E37D29BF91FC00F80CF6 /* MainCell.swift in Sources */,
 				87F5E36F29BF68DD00F80CF6 /* ListItem.swift in Sources */,
 				87F5E36229BF53CB00F80CF6 /* TabBarViewController.swift in Sources */,
-				87F5E36429BF557500F80CF6 /* FavouriteViewController.swift in Sources */,
 				87F5E35029BF51F800F80CF6 /* SceneDelegate.swift in Sources */,
 				87F5E3A429C1F6F600F80CF6 /* SearchView.swift in Sources */,
 				87F5E37129BF691700F80CF6 /* ListSection.swift in Sources */,

@@ -14,7 +14,7 @@ class MainCell: UICollectionViewCell {
     private let burgerImageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 15
+        image.layer.cornerRadius = 20
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image

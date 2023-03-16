@@ -31,7 +31,7 @@ class TabBarViewController: UITabBarController {
             ),
             generateVC(
                 viewController: MainViewController(),
-                title: "Home",
+                title: "Recipes",
                 image: UIImage(named: "Category"),
                 selectedImage: UIImage(named: "CategorySelected")
             ),

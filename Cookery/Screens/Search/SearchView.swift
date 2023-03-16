@@ -5,27 +5,38 @@ final class SearchView: UIView {
     var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.placeholder = "Enter recipe name"
+        searchBar.placeholder = "Search recipes..."
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
         return searchBar
     }()
-
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.rowHeight = 180
-        tableView.layer.cornerRadius = 10
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
+    
+    var searchLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Let's find the tastiest recipe 🍕"
+        label.font = .systemFont(ofSize: 26, weight: .bold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
 
+    let collectionView: UICollectionView = {
+       let collectionViewLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+        collectionView.backgroundColor = .none
+        collectionView.bounces = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(RecipeCell.self, forCellReuseIdentifier: RecipeCell.identifier)
         addSubview(searchBar)
-        addSubview(tableView)
+        addSubview(collectionView)
+        addSubview(searchLabel)
         addConstraints()
     }
 
@@ -35,14 +46,19 @@ final class SearchView: UIView {
 
     private func addConstraints() {
         NSLayoutConstraint.activate([
+            
+            searchLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            searchLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
             searchBar.topAnchor.constraint(equalTo: topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -27),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -27),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            
         ])
     }
 }
