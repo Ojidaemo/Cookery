@@ -10,7 +10,7 @@ import UIKit
 class FavouriteViewController: UIViewController {
     
     private let favouriteView = FavouriteView()
-    private let sections = MockData.shared.pageData
+    private let sections = CategoriesData.shared.pageData
     
     override func viewDidLoad() {
         super.viewDidLoad()

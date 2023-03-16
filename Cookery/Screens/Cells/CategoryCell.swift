@@ -20,7 +20,7 @@ class CategoryCell: UICollectionViewCell {
     private let categoryLabel: UILabel = {
         let label = UILabel()
         label.text = "Category"
-        label.font = .systemFont(ofSize: 14)
+        label.font = .systemFont(ofSize: 15)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -63,15 +63,15 @@ class CategoryCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            categoryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            categoryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            categoryLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            categoryLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             categoryLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             categoryLabel.heightAnchor.constraint(equalToConstant: 16),
             
             
-            categoryImageView.topAnchor.constraint(equalTo: topAnchor,constant: 5),
-            categoryImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            categoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            categoryImageView.topAnchor.constraint(equalTo: topAnchor,constant: 0),
+            categoryImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            categoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             categoryImageView.bottomAnchor.constraint(equalTo: categoryLabel.topAnchor, constant: 0)
         ])
     }

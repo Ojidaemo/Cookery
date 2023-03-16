@@ -11,7 +11,7 @@ class MainCell: UICollectionViewCell {
     
     var liked: Bool = false
     
-    private let burgerImageView: UIImageView = {
+    private let categoryImageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 20
@@ -70,11 +70,11 @@ class MainCell: UICollectionViewCell {
     }
     
     func configureCell(imageName: String) {
-        burgerImageView.image = UIImage(named: imageName)
+        categoryImageView.image = UIImage(named: imageName)
     }
     
     private func setupViews() {
-        contentView.addSubview(burgerImageView)
+        contentView.addSubview(categoryImageView)
         contentView.addSubview(favouriteButton)
         contentView.addSubview(backgroundTitleView)
         contentView.addSubview(nameLabel)
@@ -83,10 +83,10 @@ class MainCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            burgerImageView.topAnchor.constraint(equalTo: topAnchor,constant: 0),
-            burgerImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            burgerImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            burgerImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            categoryImageView.topAnchor.constraint(equalTo: topAnchor,constant: 0),
+            categoryImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            categoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            categoryImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             
             backgroundTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             backgroundTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
@@ -98,8 +98,8 @@ class MainCell: UICollectionViewCell {
             
             favouriteButton.heightAnchor.constraint(equalToConstant: 35),
             favouriteButton.widthAnchor.constraint(equalToConstant: 35),
-            favouriteButton.topAnchor.constraint(equalTo: burgerImageView.topAnchor, constant: 5),
-            favouriteButton.leadingAnchor.constraint(equalTo: burgerImageView.trailingAnchor,constant: -40)
+            favouriteButton.topAnchor.constraint(equalTo: categoryImageView.topAnchor, constant: 5),
+            favouriteButton.leadingAnchor.constraint(equalTo: categoryImageView.trailingAnchor,constant: -40)
             
         ])
     }

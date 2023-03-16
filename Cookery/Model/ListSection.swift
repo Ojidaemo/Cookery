@@ -17,7 +17,7 @@ enum ListSection {
         //перебираем возможные секции
         switch self {
         case .category(let items),
-                .recipe(let items):
+             .recipe(let items):
             return items
         }
     }

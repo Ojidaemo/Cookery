@@ -10,7 +10,7 @@ import UIKit
 final class SearchViewController: UIViewController {
     
     private let searchView = SearchView()
-    private let sections = MockData.shared.pageData
+    private let sections = CategoriesData.shared.pageData
     
     override func viewDidLoad() {
         super.viewDidLoad()

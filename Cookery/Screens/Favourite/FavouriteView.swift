@@ -36,7 +36,7 @@ final class FavouriteView: UIView {
             collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -27),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
             
         ])
     }

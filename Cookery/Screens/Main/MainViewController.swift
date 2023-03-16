@@ -9,52 +9,31 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    // создаем обычную коллекцию
-    private let collectionView: UICollectionView = {
-       let collectionViewLayout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = .none
-        collectionView.bounces = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        return collectionView
-    }()
+    private let sections = CategoriesData.shared.pageData
+    let mainView = MainView()
     
-    private let sections = MockData.shared.pageData
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        setupConstraints()
-        setDelegates()
+        setUpView()
+        mainView.collectionView.delegate = self
+        mainView.collectionView.dataSource = self
     }
     
-    private func setupViews() {
+    private func setUpView() {
         
-        view.backgroundColor = .white
+        view.addSubview(mainView)
         
-        view.addSubview(collectionView)
-        
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "PopularCollectionViewCell")
-        collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
-        collectionView.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderSupplementaryView")
-        collectionView.collectionViewLayout = createLayout()
-        
-    }
-    
-    private func setDelegates() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
-    }
-    
-
-    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,constant: 0)
-            
+            mainView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            mainView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            mainView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            mainView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: 0)
         ])
+        
+        mainView.collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "PopularCollectionViewCell")
+        mainView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
+        mainView.collectionView.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderSupplementaryView")
+        mainView.collectionView.collectionViewLayout = createLayout()
     }
 }
 
@@ -81,21 +60,19 @@ extension MainViewController {
                                      behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior,
                                      interGroupSpacing: CGFloat,
                                      supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem]
-//                                     contentInsets: Bool
     ) -> NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = behavior
         section.interGroupSpacing = interGroupSpacing
         section.boundarySupplementaryItems = supplementaryItems
-//        section.supplementaryContentInsetsReference  = true
         return section
     }
-
-    //секци с категориями в середине
+    
+    //секци с категориями
     private func createCategorySection() -> NSCollectionLayoutSection {
-                
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.30), heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2)), subitems: [item])
+        
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.30), heightDimension: .fractionalHeight(0.85)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.15)), subitems: [item])
         group.interItemSpacing = .fixed(5)
         let section = createLayoutSection(group: group,
                                           behavior: .paging,
@@ -107,24 +84,19 @@ extension MainViewController {
     
     // нижняя секция экзампл
     private func createExampleSection() -> NSCollectionLayoutSection {
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                            heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                                                       heightDimension: .fractionalHeight(0.33)),
-                                                                subitems: [item])
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33)), subitems: [item])
         let section = createLayoutSection(group: group,
                                           behavior: .none,
                                           interGroupSpacing: 10,
                                           supplementaryItems: [supplementaryHeaderItem()])
         section.contentInsets = .init(top: 0, leading: 10, bottom: 0, trailing: 10)
-
         return section
     }
     
     //создаем айтем для массива supplementaryItems
     private func supplementaryHeaderItem() -> NSCollectionLayoutBoundarySupplementaryItem {
-        .init(layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                heightDimension: .estimated(30)),
+        .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(30)),
               elementKind: UICollectionView.elementKindSectionHeader,
               alignment: .top)
         
@@ -135,7 +107,6 @@ extension MainViewController {
 //MARK: - UICollectionViewDelegate
 
 extension MainViewController: UICollectionViewDelegate {
-    
 }
 
 //MARK: - UICollectionViewDataSource
@@ -171,6 +142,7 @@ extension MainViewController: UICollectionViewDataSource {
             cell.configureCell(imageName: example[indexPath.row].image)
             cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             return cell
+            
         }
     }
     
@@ -180,8 +152,8 @@ extension MainViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                    withReuseIdentifier: "HeaderSupplementaryView",
-                                                                    for: indexPath) as! HeaderSupplementaryView
+                                                                         withReuseIdentifier: "HeaderSupplementaryView",
+                                                                         for: indexPath) as! HeaderSupplementaryView
             header.configureHeader(categoryName: sections[indexPath.section].title)
             return header
         default:
