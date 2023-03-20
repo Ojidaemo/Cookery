@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MainCell: UICollectionViewCell {
     
+//    private var currentRecipe: Result?
     var liked: Bool = false
     
-    private let categoryImageView: UIImageView = {
+    private let recipeImageView: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleToFill
         image.layer.cornerRadius = 20
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +30,7 @@ class MainCell: UICollectionViewCell {
         return view
     }()
     
-    private var nameLabel: UILabel = {
+    var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Egg Top Burger"
         label.textAlignment = .center
@@ -48,7 +50,6 @@ class MainCell: UICollectionViewCell {
     }()
     
     @objc func favouriteButtonPressed() {
-        print("PRESSED")
         if liked {
             favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             liked = false
@@ -69,12 +70,14 @@ class MainCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(imageName: String) {
-        categoryImageView.image = UIImage(named: imageName)
+    public func configureCell(_ recipe: Result) {
+        self.nameLabel.text = recipe.title
+        guard let imageURL = recipe.image else { return }
+        self.recipeImageView.kf.setImage(with: URL(string: imageURL))
     }
     
     private func setupViews() {
-        contentView.addSubview(categoryImageView)
+        contentView.addSubview(recipeImageView)
         contentView.addSubview(favouriteButton)
         contentView.addSubview(backgroundTitleView)
         contentView.addSubview(nameLabel)
@@ -83,10 +86,10 @@ class MainCell: UICollectionViewCell {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            categoryImageView.topAnchor.constraint(equalTo: topAnchor,constant: 0),
-            categoryImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            categoryImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            categoryImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            recipeImageView.topAnchor.constraint(equalTo: topAnchor,constant: 0),
+            recipeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            recipeImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            recipeImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             
             backgroundTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
             backgroundTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
@@ -98,8 +101,8 @@ class MainCell: UICollectionViewCell {
             
             favouriteButton.heightAnchor.constraint(equalToConstant: 35),
             favouriteButton.widthAnchor.constraint(equalToConstant: 35),
-            favouriteButton.topAnchor.constraint(equalTo: categoryImageView.topAnchor, constant: 5),
-            favouriteButton.leadingAnchor.constraint(equalTo: categoryImageView.trailingAnchor,constant: -40)
+            favouriteButton.topAnchor.constraint(equalTo: recipeImageView.topAnchor, constant: 5),
+            favouriteButton.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor,constant: -40)
             
         ])
     }

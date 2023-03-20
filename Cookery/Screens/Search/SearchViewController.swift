@@ -11,6 +11,8 @@ final class SearchViewController: UIViewController {
     
     private let searchView = SearchView()
     private let sections = CategoriesData.shared.pageData
+    private let recipesManager = RecipesManager()
+    var searchData: [Result] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,12 +21,12 @@ final class SearchViewController: UIViewController {
         searchView.collectionView.dataSource = self
         searchView.searchBar.delegate = self
         setUpView()
-        searchView.collectionView.isHidden = true
+//        searchView.collectionView.isHidden = true
     }
     
     private func setUpView() {
         view.addSubview(searchView)
-        searchView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
+        searchView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
         NSLayoutConstraint.activate([
             searchView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -34,34 +36,44 @@ final class SearchViewController: UIViewController {
     }
     
     func search(for searchText: String) {
-        print("Searching for '\(searchText)'...")
+        recipesManager.searchRequest(for: searchText) { [weak self] RecipeData in
+            guard let self = self else { return }
+            if let recievedData = RecipeData.results {
+                self.searchData.append(contentsOf: recievedData)
+                print(recievedData[0].title)
+                DispatchQueue.main.async {
+                    self.searchView.collectionView.reloadData()
+                    }
+                }
+            }
         searchView.searchBar.text = ""
         searchView.searchLabel.isHidden = true
-        searchView.collectionView.isHidden = false
+//        searchView.collectionView.isHidden = false
     }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
+    // odna sekciya je
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        searchData.count
+//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        return searchData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExampleCollectionViewCell", for: indexPath) as? MainCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCell
         else {
             return UICollectionViewCell()
         }
-        cell.configureCell(imageName: "foodImage")
+        cell.configureCell(searchData[indexPath.row])
         cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //TODO: - request by id here
         let vc = DetailedViewController()
         self.navigationController?.pushViewController(vc, animated: true)
 

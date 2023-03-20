@@ -22,7 +22,7 @@ class FavouriteViewController: UIViewController {
     
     private func setUpView() {
         view.addSubview(favouriteView)
-        favouriteView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
+        favouriteView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
         NSLayoutConstraint.activate([
             favouriteView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             favouriteView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -44,16 +44,16 @@ extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExampleCollectionViewCell", for: indexPath) as? MainCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCell
         else {
             return UICollectionViewCell()
         }
-        cell.configureCell(imageName: "foodImage")
         cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //TODO: - request by ID here
         let vc = DetailedViewController()
         self.navigationController?.pushViewController(vc, animated: true)
 

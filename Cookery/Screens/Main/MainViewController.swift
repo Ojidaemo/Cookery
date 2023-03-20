@@ -10,7 +10,8 @@ import UIKit
 class MainViewController: UIViewController {
     
     private let sections = CategoriesData.shared.pageData
-    let mainView = MainView()
+    private let mainView = MainView()
+    private let recipesManager = RecipesManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class MainViewController: UIViewController {
         ])
         
         mainView.collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: "PopularCollectionViewCell")
-        mainView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "ExampleCollectionViewCell")
+        mainView.collectionView.register(MainCell.self, forCellWithReuseIdentifier: "MainCollectionViewCell")
         mainView.collectionView.register(HeaderSupplementaryView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderSupplementaryView")
         mainView.collectionView.collectionViewLayout = createLayout()
     }
@@ -50,7 +51,7 @@ extension MainViewController {
             case .category(_):
                 return self.createCategorySection()
             case .recipe(_):
-                return self.createExampleSection()
+                return self.createMainSection()
             }
         }
     }
@@ -82,8 +83,8 @@ extension MainViewController {
         return section
     }
     
-    // нижняя секция экзампл
-    private func createExampleSection() -> NSCollectionLayoutSection {
+    // нижняя секция
+    private func createMainSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33)), subitems: [item])
         let section = createLayoutSection(group: group,
@@ -115,6 +116,7 @@ extension MainViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -134,12 +136,11 @@ extension MainViewController: UICollectionViewDataSource {
             cell.configureCell(categoryName: category[indexPath.row].title, imageName: category[indexPath.row].image)
             return cell
             
-        case .recipe(let example):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ExampleCollectionViewCell", for: indexPath) as? MainCell
+        case .recipe(let main):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCell
             else {
                 return UICollectionViewCell()
             }
-            cell.configureCell(imageName: example[indexPath.row].image)
             cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             return cell
             
@@ -162,12 +163,22 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
         if indexPath.section == 1 {
+            //TODO: - request by ID here
             let vc = DetailedViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
-            return
+            //request random recipes for all category otherwise request by type for the rest categories
+            if indexPath.row == 0 {
+                recipesManager.randomRequest { RecipeData in
+                    print(RecipeData.recipes?[0].title)
+                }
+            } else {
+                let selectedCategory = CategoriesData().category.items[indexPath.row].title
+                recipesManager.categoriesRequest(for: selectedCategory) { RecipeTypesData in
+                    print(RecipeTypesData.results?[0].title)
+                }
+            }
         }
     }
 }

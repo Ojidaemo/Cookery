@@ -15,7 +15,8 @@ struct CategoriesData {
     
     let category: ListSection = {
         .category([
-            .init(title: "All", image: "Main course"),
+            .init(title: "All", image: "all"),
+            .init(title: "Main course", image: "Main course"),
             .init(title: "Side dish", image: "Side dish"),
             .init(title: "Dessert", image: "Dessert"),
             .init(title: "Appetizer", image: "Appetizer"),
@@ -30,6 +31,7 @@ struct CategoriesData {
             .init(title: "Fingerfood", image: "Fingerfood")
         ])
     }()
+    
     
 //        .category([
 //            .init(title: "All", image: UIImage(named: "Main course")!),
@@ -69,7 +71,6 @@ struct CategoriesData {
     let recipe: ListSection = {
         .recipe([
             .init(title: "", image: "foodImage"),
-            .init(title: "", image: "Main course"),
             .init(title: "", image: "Main course"),
             ])
     }()
