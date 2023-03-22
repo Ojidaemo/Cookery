@@ -33,6 +33,7 @@ class MainCell: UICollectionViewCell {
     var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Egg Top Burger"
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont(name: "Arial", size: 16)
         label.textColor = .black
@@ -76,6 +77,16 @@ class MainCell: UICollectionViewCell {
         self.recipeImageView.kf.setImage(with: URL(string: imageURL))
     }
     
+    public func configureForRandomCell(_ recipe: Recipe) {
+        self.nameLabel.text = recipe.title
+        print(recipe.title)
+        let imageURL = recipe.image
+        print(recipe.image)
+        self.recipeImageView.kf.setImage(with: URL(string: imageURL))
+        layoutSubviews()
+
+    }
+    
     private func setupViews() {
         contentView.addSubview(recipeImageView)
         contentView.addSubview(favouriteButton)
@@ -97,7 +108,8 @@ class MainCell: UICollectionViewCell {
             backgroundTitleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15),
             
             nameLabel.centerYAnchor.constraint(equalTo: backgroundTitleView.centerYAnchor),
-            nameLabel.centerXAnchor.constraint(equalTo: backgroundTitleView.centerXAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: backgroundTitleView.leadingAnchor, constant: 5),
+            nameLabel.trailingAnchor.constraint(equalTo: backgroundTitleView.trailingAnchor, constant: -5),
             
             favouriteButton.heightAnchor.constraint(equalToConstant: 35),
             favouriteButton.widthAnchor.constraint(equalToConstant: 35),

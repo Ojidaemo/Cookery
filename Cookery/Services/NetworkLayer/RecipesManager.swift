@@ -13,21 +13,23 @@ struct RecipesManager {
     
     
     //MARK: - Request for popular recipes
-    func randomRequest(completionHandler: @escaping (RecipeData) -> Void) {
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: CreateURL.randomURL(apiKey: key).url) { data, response, error in
-            if let randomData = data {
-                let decoder = JSONDecoder()
-                do {
-                    let decodedRandomRecipes = try decoder.decode(RecipeData.self, from: randomData)
-                    completionHandler(decodedRandomRecipes)
-                } catch let error {
-                    print(error)
-                }
-            }
-        }
-        task.resume()
-    }
+//    func randomRequest(completionHandler: @escaping (RecipeData) -> Void) {
+//        let url = CreateURL.randomURL(apiKey: key).url
+//        print("random \(url)")
+//        let session = URLSession(configuration: .default)
+//        let task = session.dataTask(with: url) { data, response, error in
+//            if let randomData = data {
+//                let decoder = JSONDecoder()
+//                do {
+//                    let decodedRandomRecipes = try decoder.decode(RecipeData.self, from: randomData)
+//                    completionHandler(decodedRandomRecipes)
+//                } catch let error {
+//                    print(error)
+//                }
+//            }
+//        }
+//        task.resume()
+//    }
     
     //MARK: - Request for recipes by categories
     
@@ -52,7 +54,7 @@ struct RecipesManager {
     
     func detailsRequest(for id: Int, completionHandler: @escaping (Recipe) -> Void) {
         let url = CreateURL.detailedURL(apiKey: key, id: id).url
-        print(url)
+        print("details \(url)")
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
             if let detailsData = data {
@@ -71,6 +73,7 @@ struct RecipesManager {
     //MARK: - Request for search results by keyword
     func searchRequest(for keyWord: String, completionHandler: @escaping (RecipeTypesData) -> Void) {
         let url = CreateURL.searchURL(apiKey: key, keyWord: keyWord).url
+        print("search \(url)")
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { data, response, error in
             if let searchData = data {

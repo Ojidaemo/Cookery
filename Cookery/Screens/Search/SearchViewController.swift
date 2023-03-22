@@ -36,11 +36,10 @@ final class SearchViewController: UIViewController {
     }
     
     func search(for searchText: String) {
-        recipesManager.searchRequest(for: searchText) { [weak self] RecipeData in
+        recipesManager.searchRequest(for: searchText) { [weak self] RecipeTypesData in
             guard let self = self else { return }
-            if let recievedData = RecipeData.results {
+            if let recievedData = RecipeTypesData.results {
                 self.searchData.append(contentsOf: recievedData)
-                print(recievedData[0].title)
                 DispatchQueue.main.async {
                     self.searchView.collectionView.reloadData()
                     }

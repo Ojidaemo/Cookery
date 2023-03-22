@@ -12,12 +12,33 @@ class MainViewController: UIViewController {
     private let sections = CategoriesData.shared.pageData
     private let mainView = MainView()
     private let recipesManager = RecipesManager()
+    var categoriesData: [Result] = []
+    var currentRicepsArray: [Recipe] = []
+
+    let selectedCategory = "random"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        
+        recipesManager.categoriesRequest(for: selectedCategory) { [weak self] RecipeTypesData in
+            guard let self = self else { return }
+            if let recievedData = RecipeTypesData.results {
+                self.categoriesData.append(contentsOf: recievedData)
+                DispatchQueue.main.async {
+                    self.mainView.collectionView.reloadData()
+                }
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.mainView.collectionView.reloadData()
+        }
     }
     
     private func setUpView() {
@@ -116,12 +137,16 @@ extension MainViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //определяем сколько в каждой секции айтемов
-        return sections[section].count
+        if section == 0 {
+            return sections[0].count
+        } else {
+//            return categoriesData.count
+            return categoriesData.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -136,11 +161,12 @@ extension MainViewController: UICollectionViewDataSource {
             cell.configureCell(categoryName: category[indexPath.row].title, imageName: category[indexPath.row].image)
             return cell
             
-        case .recipe(let main):
+        case .recipe(_):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCell
             else {
                 return UICollectionViewCell()
             }
+            cell.configureCell(categoriesData[indexPath.row])
             cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             return cell
             
@@ -165,18 +191,30 @@ extension MainViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             //TODO: - request by ID here
+            
             let vc = DetailedViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            //request random recipes for all category otherwise request by type for the rest categories
-            if indexPath.row == 0 {
-                recipesManager.randomRequest { RecipeData in
-                    print(RecipeData.recipes?[0].title)
+            guard let selectedID = categoriesData[indexPath.row].id else { return }
+            recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
+                guard let self = self else { return }
+                let recivedData = recipesData
+                self.currentRicepsArray.append(recivedData)
+                DispatchQueue.main.async {
+                    vc.detailedView.configure(self.currentRicepsArray)
                 }
-            } else {
-                let selectedCategory = CategoriesData().category.items[indexPath.row].title
-                recipesManager.categoriesRequest(for: selectedCategory) { RecipeTypesData in
-                    print(RecipeTypesData.results?[0].title)
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            
+        } else {
+            categoriesData.removeAll()
+            let selectedCategory = CategoriesData().category.items[indexPath.row].title
+            recipesManager.categoriesRequest(for: selectedCategory) { [weak self] RecipeTypesData in
+                guard let self = self else { return }
+                if let recievedData = RecipeTypesData.results {
+                    self.categoriesData.append(contentsOf: recievedData)
+                    DispatchQueue.main.async {
+                        self.mainView.collectionView.reloadData()
+                    }
                 }
             }
         }

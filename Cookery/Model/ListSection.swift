@@ -33,7 +33,7 @@ enum ListSection {
         case .category(_):
             return "Food categories"
         case .recipe(_):
-            return "The most popular recipes"
+            return "Random recipes"
         }
     }
 }

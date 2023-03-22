@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		875ECE8029C89B4F00FDFC68 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 875ECE7F29C89B4F00FDFC68 /* Kingfisher */; };
+		875ECE8229C9F9B900FDFC68 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875ECE8129C9F9B900FDFC68 /* String.swift */; };
 		87F5E34E29BF51F800F80CF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E34D29BF51F800F80CF6 /* AppDelegate.swift */; };
 		87F5E35029BF51F800F80CF6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E34F29BF51F800F80CF6 /* SceneDelegate.swift */; };
 		87F5E35229BF51F800F80CF6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F5E35129BF51F800F80CF6 /* MainViewController.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		875ECE8129C9F9B900FDFC68 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		87F5E34A29BF51F800F80CF6 /* Cookery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cookery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F5E34D29BF51F800F80CF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		87F5E34F29BF51F800F80CF6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				87F5E36729BF601F00F80CF6 /* UIColor.swift */,
+				875ECE8129C9F9B900FDFC68 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				87F5E3AC29C33E8B00F80CF6 /* FavouriteView.swift in Sources */,
 				87F5E3AA29C23BB400F80CF6 /* DetailedViewController.swift in Sources */,
 				87F5E3AE29C3444E00F80CF6 /* FavouriteViewController.swift in Sources */,
+				875ECE8229C9F9B900FDFC68 /* String.swift in Sources */,
 				87F5E36829BF601F00F80CF6 /* UIColor.swift in Sources */,
 				87F5E3C129C6309200F80CF6 /* RecipeTypesData.swift in Sources */,
 				87F5E35229BF51F800F80CF6 /* MainViewController.swift in Sources */,

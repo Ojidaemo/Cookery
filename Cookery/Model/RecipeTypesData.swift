@@ -23,4 +23,6 @@ struct Result: Codable {
 
 enum ImageType: String, Codable {
     case jpg = "jpg"
+    case png = "png"
+    case jpeg = "jpeg"
 }
