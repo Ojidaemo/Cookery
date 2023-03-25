@@ -29,12 +29,12 @@ extension CreateURL {
                 return url
             }
             fatalError()
-        case .detailedURL(let apiKey, var id):
+        case .detailedURL(let apiKey, let id):
             if let url = URL(string: "https://api.spoonacular.com/recipes//\(id)/information?apiKey=\(apiKey)") {
                 return url
             }
             fatalError()
-        case .searchURL(let apiKey, var keyWord):
+        case .searchURL(let apiKey, let keyWord):
             if let url = URL(string: "https://api.spoonacular.com/recipes/complexSearch?query=\(keyWord)&apiKey=\(apiKey)") {
                 return url
             }

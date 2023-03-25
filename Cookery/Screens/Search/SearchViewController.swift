@@ -13,6 +13,7 @@ final class SearchViewController: UIViewController {
     private let sections = CategoriesData.shared.pageData
     private let recipesManager = RecipesManager()
     var searchData: [Result] = []
+    var currentRicepsArray: [Recipe] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,6 @@ final class SearchViewController: UIViewController {
         searchView.collectionView.dataSource = self
         searchView.searchBar.delegate = self
         setUpView()
-//        searchView.collectionView.isHidden = true
     }
     
     private func setUpView() {
@@ -47,15 +47,10 @@ final class SearchViewController: UIViewController {
             }
         searchView.searchBar.text = ""
         searchView.searchLabel.isHidden = true
-//        searchView.collectionView.isHidden = false
     }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    // odna sekciya je
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        searchData.count
-//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchData.count
@@ -72,10 +67,17 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: - request by id here
         let vc = DetailedViewController()
+        guard let selectedID = searchData[indexPath.row].id else { return }
+        recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
+            guard let self = self else { return }
+            let recivedData = recipesData
+            self.currentRicepsArray.append(recivedData)
+            DispatchQueue.main.async {
+                vc.detailedView.configure(self.currentRicepsArray)
+            }
+        }
         self.navigationController?.pushViewController(vc, animated: true)
-
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

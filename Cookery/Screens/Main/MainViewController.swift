@@ -36,6 +36,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print(DataStorage.favoriteRecipes)
         DispatchQueue.main.async {
             self.mainView.collectionView.reloadData()
         }
@@ -144,7 +145,6 @@ extension MainViewController: UICollectionViewDataSource {
         if section == 0 {
             return sections[0].count
         } else {
-//            return categoriesData.count
             return categoriesData.count
         }
     }
@@ -166,8 +166,16 @@ extension MainViewController: UICollectionViewDataSource {
             else {
                 return UICollectionViewCell()
             }
+            let recipe = categoriesData[indexPath.row]
+            if DataStorage.favoriteRecipes.contains(recipe) {
+                //cell.liked = true
+                cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveActive"), for: .normal)
+            } else {
+                //cell.liked = false
+                cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
+            }
+
             cell.configureCell(categoriesData[indexPath.row])
-            cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             return cell
             
         }
@@ -190,8 +198,6 @@ extension MainViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            //TODO: - request by ID here
-            
             let vc = DetailedViewController()
             guard let selectedID = categoriesData[indexPath.row].id else { return }
             recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
@@ -203,8 +209,6 @@ extension MainViewController: UICollectionViewDataSource {
                 }
             }
             self.navigationController?.pushViewController(vc, animated: true)
-            
-            
         } else {
             categoriesData.removeAll()
             let selectedCategory = CategoriesData().category.items[indexPath.row].title

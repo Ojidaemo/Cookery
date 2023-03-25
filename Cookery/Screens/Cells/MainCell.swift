@@ -10,8 +10,10 @@ import Kingfisher
 
 class MainCell: UICollectionViewCell {
     
-//    private var currentRecipe: Result?
     var liked: Bool = false
+    private var currentRecipe: Result?
+//    var favouriteVC = FavouriteViewController()
+
     
     private let recipeImageView: UIImageView = {
         let image = UIImageView()
@@ -43,7 +45,6 @@ class MainCell: UICollectionViewCell {
     
     lazy var favouriteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "SaveInactive"), for: .normal)
         button.tintColor = .red
         button.addTarget(self, action: #selector(favouriteButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -54,9 +55,13 @@ class MainCell: UICollectionViewCell {
         if liked {
             favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
             liked = false
+            DataStorage.favoriteRecipes.removeAll{ $0 == currentRecipe }
+            print("Массив избранное =", DataStorage.favoriteRecipes)
         } else {
             favouriteButton.setBackgroundImage(UIImage(named: "SaveActive"), for: .normal)
             liked = true
+            DataStorage.favoriteRecipes.append(currentRecipe!)
+            print("Массив избранное =", DataStorage.favoriteRecipes)
         }
     }
     
@@ -75,16 +80,13 @@ class MainCell: UICollectionViewCell {
         self.nameLabel.text = recipe.title
         guard let imageURL = recipe.image else { return }
         self.recipeImageView.kf.setImage(with: URL(string: imageURL))
+        self.currentRecipe = recipe
     }
     
     public func configureForRandomCell(_ recipe: Recipe) {
         self.nameLabel.text = recipe.title
-        print(recipe.title)
         let imageURL = recipe.image
-        print(recipe.image)
         self.recipeImageView.kf.setImage(with: URL(string: imageURL))
-        layoutSubviews()
-
     }
     
     private func setupViews() {

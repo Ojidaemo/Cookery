@@ -8,13 +8,13 @@
 import Foundation
 
 // MARK: - RecipeData
-struct RecipeTypesData: Codable {
+struct RecipeTypesData: Codable, Equatable {
     let results: [Result]?
     let offset, number, totalResults: Int?
 }
 
 // MARK: - Result
-struct Result: Codable {
+struct Result: Codable, Equatable {
     let id: Int?
     let title: String?
     let image: String?
