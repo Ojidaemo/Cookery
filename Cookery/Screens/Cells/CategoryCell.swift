@@ -11,8 +11,9 @@ class CategoryCell: UICollectionViewCell {
     
     private let categoryImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "cloud")
-        image.contentMode = .scaleAspectFit
+//        image.image = UIImage(systemName: "cloud")
+        image.image = UIImage(named: "All")
+        image.contentMode = .scaleToFill
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()

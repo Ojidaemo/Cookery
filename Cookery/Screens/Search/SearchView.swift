@@ -14,9 +14,14 @@ final class SearchView: UIView {
     
     var searchLabel: UILabel = {
         let label = UILabel()
-        label.text = "Let's find the tastiest recipe 🍕"
-        label.font = .systemFont(ofSize: 26, weight: .bold)
+        label.text = """
+        Let's find
+        the TASTIEST recipe
+        in the world of food 🍕
+        """
+        label.font = .systemFont(ofSize: 30, weight: .semibold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

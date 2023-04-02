@@ -13,7 +13,7 @@ final class SearchViewController: UIViewController {
     private let sections = CategoriesData.shared.pageData
     private let recipesManager = RecipesManager()
     var searchData: [Result] = []
-    var currentRicepsArray: [Recipe] = []
+    var currentRecipesArray: [Recipe] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,9 +72,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
             guard let self = self else { return }
             let recivedData = recipesData
-            self.currentRicepsArray.append(recivedData)
+            self.currentRecipesArray.append(recivedData)
             DispatchQueue.main.async {
-                vc.detailedView.configure(self.currentRicepsArray)
+                vc.detailedView.configure(self.currentRecipesArray)
             }
         }
         self.navigationController?.pushViewController(vc, animated: true)

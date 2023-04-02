@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     private let mainView = MainView()
     private let recipesManager = RecipesManager()
     var categoriesData: [Result] = []
-    var currentRicepsArray: [Recipe] = []
+    var currentRecipesArray: [Recipe] = []
 
     let selectedCategory = "random"
     
@@ -203,9 +203,9 @@ extension MainViewController: UICollectionViewDataSource {
             recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
                 guard let self = self else { return }
                 let recivedData = recipesData
-                self.currentRicepsArray.append(recivedData)
+                self.currentRecipesArray.append(recivedData)
                 DispatchQueue.main.async {
-                    vc.detailedView.configure(self.currentRicepsArray)
+                    vc.detailedView.configure(self.currentRecipesArray)
                 }
             }
             self.navigationController?.pushViewController(vc, animated: true)

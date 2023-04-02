@@ -13,7 +13,7 @@ struct CategoriesData {
     
     let category: ListSection = {
         .category([
-            .init(title: "Random", image: "all"),
+            .init(title: "Random", image: "All"),
             .init(title: "Main course", image: "Main course"),
             .init(title: "Side dish", image: "Side dish"),
             .init(title: "Dessert", image: "Dessert"),

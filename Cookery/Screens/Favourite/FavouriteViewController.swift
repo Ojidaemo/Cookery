@@ -12,7 +12,7 @@ class FavouriteViewController: UIViewController {
     private let favouriteView = FavouriteView()
     private let sections = CategoriesData.shared.pageData
     private let recipesManager = RecipesManager()
-    var currentRicepsArray: [Recipe] = []
+    var currentRecipesArray: [Recipe] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,43 +45,49 @@ class FavouriteViewController: UIViewController {
 extension FavouriteViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if DataStorage.favoriteRecipes.count == 0 {
+            favouriteView.nothingSavedLabel.isHidden = false
+        } else {
+            favouriteView.nothingSavedLabel.isHidden = true
+        }
         return DataStorage.favoriteRecipes.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCell
-        else {
-            return UICollectionViewCell()
-        }
-        cell.liked = true
-        let recipe = DataStorage.favoriteRecipes[indexPath.row]
-        if DataStorage.favoriteRecipes.contains(recipe) {
-            //cell.liked = true
-            cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveActive"), for: .normal)
-        } else {
-            //cell.liked = false
-            cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
-        }
-        cell.configureCell(recipe)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DetailedViewController()
-        guard let selectedID = DataStorage.favoriteRecipes[indexPath.row].id else { return }
-        recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
-            guard let self = self else { return }
-            let recivedData = recipesData
-            self.currentRicepsArray.append(recivedData)
-            DispatchQueue.main.async {
-                vc.detailedView.configure(self.currentRicepsArray)
+        
+        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCollectionViewCell", for: indexPath) as? MainCell
+            else {
+                return UICollectionViewCell()
             }
+            cell.liked = true
+            let recipe = DataStorage.favoriteRecipes[indexPath.row]
+            if DataStorage.favoriteRecipes.contains(recipe) {
+                //cell.liked = true
+                cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveActive"), for: .normal)
+            } else {
+                //cell.liked = false
+                cell.favouriteButton.setBackgroundImage(UIImage(named: "SaveInactive"), for: .normal)
+            }
+            cell.configureCell(recipe)
+            return cell
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let vc = DetailedViewController()
+            guard let selectedID = DataStorage.favoriteRecipes[indexPath.row].id else { return }
+            recipesManager.detailsRequest(for: selectedID) { [weak self] recipesData in
+                guard let self = self else { return }
+                let recivedData = recipesData
+                self.currentRecipesArray.append(recivedData)
+                DispatchQueue.main.async {
+                    vc.detailedView.configure(self.currentRecipesArray)
+                }
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return CGSize(width: view.frame.width - 20, height: view.frame.height / 3.64)
+        }
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width - 20, height: view.frame.height / 3.64)
-    }
-}
+
 
